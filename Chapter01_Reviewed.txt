@@ -1,0 +1,120 @@
+--Example 1:
+/*
+How to create a STUDENT table with the following data
+ColumnName DataType Size Key
+rollNo char 4 Primary Key
+studentName varchar 30  NOT NULL
+Grade CHAR 1 NOT NULL
+Age  NUMBER NOT NULL
+Course VARCHAR2 50 NOT NULL*/
+
+--VERIFIED on 10th Sep,2019
+--
+CREATE TABLE student
+(
+rollNo char(4) PRIMARY KEY,
+studentName varchar(30) NOT NULL, /*ADDED BY AADITYA :  Varchar2(10) is not valid in MS SQL Server ,replace it with varchar(10) Not NULL and above comments say student varchar 30 but here it is varchar(10)*/
+Grade CHAR(1) NOT NULL, /* ADDED BY AADITYA : Above Comments say Grade as Char(1) and Not Null*/
+Age INT NOT NULL, /* ADDED BY AADITYA : Not null missing here*/
+Course varchar(50) NOT NULL,/*ADDED BY AADITYA : This Column was missing and used in following insert statements*/ -- /* Not null missing here*/
+);
+
+--OR
+--VERIFIED on 10th Sep,2019
+
+/*Below Create table creates table with rollno as primary key with a specific name student_pk (This is Good Practice)*/
+CREATE TABLE student
+(
+rollNo char(4) NOT NULL, /* ADDED BY AADITYA : anyhow we are creating a Primary key constraint below,no need to mention primary key here*/
+studentName varchar(30) NOT NULL, /* ADDED BY AADITYA :  Varchar2(10) is not valid in MS SQL Server ,replace it with varchar(30) Not NULL*/
+Grade CHAR(1) NOT NULL,
+Age INT NOT NULL,
+Course varchar(50) NOT NULL,/* ADDED BY AADITYA : This Column was missing and used in following insert statements*/
+CONSTRAINT student_pk PRIMARY KEY (rollNo)
+);
+
+/*
+Note:
+The table name can be of 30 characters in length at the maximum.The limitation varies from product to product.
+It can contain alphabets from A to Z and 0 to 9 and Special characters such as under score (_) and Space ' ' enclosed in the square brackets
+The SQL reserved words such as SELECT, INSERT, DELETE, WHERE etc:- are not permitted for use
+*/
+
+--Example 2:
+/*
+Insert few sample rows into a student table
+*/
+--VERIFIED on 10th Sep,2019 (ADDED BY AADITYA) : 
+insert into student(rollNo,studentName,Grade,Age,Course) values('S001','Prashanth Jayaram','A',36,'Computer Science');
+insert into student(rollNo,studentName,Grade,Age,Course) values('S002','Frank Solomon','B',35,'Physics');
+insert into student(rollNo,studentName,Grade,Age,Course) values('S003','Rachana Karia','B',36,'Electronics');
+insert into student(rollNo,studentName,Grade,Age,Course) values('S004','Nayagam','C',35,'Mathematics');
+insert into student(rollNo,studentName,Grade,Age,Course) values('S005','Chinnu','C',33,'Electronics');
+
+--Example 3:
+
+--How to SELECT without a column name or table?
+
+SELECT concat(' ', 'My', 'first', 'query') /* ADDED BY AADITYA : Incorrect Syntax here ,Corrected */
+
+--Example 4:
+
+--How to SELECT student name, from a student table?
+
+SELECT StudentName FROM student;  /*ADDED BY AADITYA : VERIFIED*/
+
+--Example 5:
+
+--How to select multiple columns from a student table?
+
+SELECT StudentName, Grade, Age FROM student; /*ADDED BY AADITYA : VERIFIED*/
+
+--Example 6:
+
+--How to select all columns from a student table?
+
+SELECT * FROM student; /*ADDED BY AADITYA : VERIFIED*/
+
+--Example 7:
+
+--How to use to .(DOT) operator or access operator to select the columns from a student table?
+
+SELECT student.StudentName, student.Grade, student.Age FROM student;  /*ADDED BY AADITYA : VERIFIED*/
+
+--Example 8:
+
+--How to use table alias to select columns from a student table?
+
+SELECT s.StudentName, s.Grade, s.Age FROM student s; /*ADDED BY AADITYA : VERIFIED*/
+
+--Example 9:
+
+--How to use filter to list the selected data using WHERE clause?
+
+SELECT student.StudentName, student.Grade, student.Age 
+FROM student 
+WHERE student.Age > 12 /*ADDED BY AADITYA : VERIFIED*/
+
+--Example 10:
+
+--How to list the distinct age present in the student table?
+
+SELECT DISTINCT student.Age FROM student; /*ADDED BY AADITYA : VERIFIED*/
+
+--Example 11:
+
+--In this example, you'll see how to create composite key
+
+CREATE TABLE student
+(
+rollno char(4) NOT null,
+name varchar(30) NOT NULL,
+date_of_birth date NOT NULL,
+marks smallint NOT NULL, /* can use smallint for marks /*ADDED BY AADITYA : VERIFIED*/*/
+CONSTRAINT stud_ck PRIMARY KEY (rollno, name) /*ADDED BY AADITYA : VERIFIED*/
+);
+
+/*
+Note: Primary Key  is a combination of UNIQUE, NOT NULL and clustered Index
+*/
+

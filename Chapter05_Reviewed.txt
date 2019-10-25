@@ -1,0 +1,95 @@
+/****** Introduction To SQL Chapter Five  Scripts ******/
+
+/*  SELECT SYNTAX */
+
+SELECT * FROM ProductCategories; /*ADDED BY AADITYA : VERIFIED*/
+
+
+SELECT GETDATE(); /*ADDED BY AADITYA : VERIFIED*/
+
+/* SELECTING  LIMITED COLUMNS  */
+
+SELECT ProductCategoryID, ProductCategoryName /*ADDED BY AADITYA : VERIFIED*/
+FROM ProductCategories;
+
+
+
+SELECT ProductCategoryName, ProductCategoryID /*ADDED BY AADITYA : VERIFIED*/
+FROM ProductCategories;
+
+
+
+/* USING NAMING ALIASES */
+
+
+SELECT ProductCategoryName AS CATEGORY, ProductCategoryID AS ID 
+FROM ProductCategories; /*ADDED BY AADITYA : VERIFIED*/
+
+
+SELECT ProductCategoryName AS [CATEGORY NAME], ProductCategoryID AS ID 
+FROM ProductCategories; /*ADDED BY AADITYA : VERIFIED*/
+
+
+/* ORDERING RESULTS */
+
+SELECT ProductCategoryName   AS [CATEGORY NAME], ProductCategoryID  AS ID 
+FROM ProductCategories
+ORDER BY [CATEGORY NAME] ASC; /*ADDED BY AADITYA : VERIFIED*/
+
+
+SELECT ProductCategoryName   AS [CATEGORY NAME], ProductCategoryID  AS ID 
+FROM ProductCategories
+ORDER BY [CATEGORY NAME] DESC; /*ADDED BY AADITYA : VERIFIED*/
+
+SELECT FirstName, CustomerID 
+FROM Customers ;/*ADDED BY AADITYA : VERIFIED*/
+
+
+SELECT FirstName, CustomerID 
+FROM Customers 
+ORDER BY FirstName, CustomerID DESC; /*ADDED BY AADITYA : VERIFIED*/
+
+SELECT FirstName, CustomerID 
+FROM Customers 
+ORDER BY 1, 2;  /*ADDED BY AADITYA : VERIFIED*/
+
+/* USING TOP AND DISTINCT */
+
+SELECT TOP 5  ProductName,NetRetailPrice
+FROM Products 
+ORDER BY ProductName; /*ADDED BY AADITYA : VERIFIED*/
+
+SELECT TOP 50 PERCENT  ProductName,NetRetailPrice
+FROM Products 
+ORDER BY ProductName  ; /*ADDED BY AADITYA : VERIFIED*/
+
+SELECT FirstName,LastName, Address /*ADDED BY AADITYA : VERIFIED*/
+FROM Customers;
+
+SELECT DISTINCT FirstName,LastName, Address /*ADDED BY AADITYA : VERIFIED*/
+FROM Customers;
+
+SELECT DISTINCT FirstName, Address
+FROM Customers;
+
+/* USING MATHEMATICAL EXPRESSIONS */
+
+SELECT ProductID, Quantity,UnitPrice, (Quantity*UnitPrice) AS [Line Item Total]
+FROM OrderItems; /*ADDED BY AADITYA : VERIFIED*/
+
+
+SELECT ProductID, Quantity,UnitPrice, (Quantity*UnitPrice) AS [Line Item Total], Discount, ((Quantity*UnitPrice)-((Quantity*UnitPrice)*Discount)) AS [Price After Discount] 
+FROM OrderItems; /*ADDED BY AADITYA : VERIFIED*/
+
+
+
+/*  CHAPTER FIVE ACTIVITY SOLUTION*/
+
+Select TOP 5
+	   Products.ProductName as [Product Name],
+	   Products.NetRetailPrice as [Product Retail Price],
+	   Products.AvailableQuantity as [Available Quantity],
+	   Products.AvailableQuantity * Products.NetRetailPrice as [Total Price of Available QTY]
+from Products 
+
+ORDER BY Products.NetRetailPrice Desc /*ADDED BY AADITYA : VERIFIED*/

@@ -1,0 +1,354 @@
+Example 1:
+
+--How to define a foreign key on CUSTOMER_ID of ORDERS table referring to CUSTOMERID of CUSTOMERS table.
+
+DROP DATABASE   IF     EXISTS PACKT_ONLINE_SHOP; 
+CREATE DATABASE IF NOT EXISTS PACKT_ONLINE_SHOP; 
+USE PACKT_ONLINE_SHOP; 
+CREATE TABLE Customers 
+( 
+CustomerID INT NOT NULL AUTO_INCREMENT, 
+FirstName CHAR(50) NOT NULL, 
+LastName CHAR(50) NOT NULL, 
+Address CHAR(250) NULL, 
+Email CHAR(200) NULL, 
+Phone CHAR(50) NULL, 
+Notes VARCHAR(750) NULL, 
+BalanceNotes VARCHAR(750) NULL, 
+PRIMARY KEY (CustomerID) 
+); 
+/*
+Note:
+A foreign key always refer to a primary key.
+A table can have multiple foreign key
+Insert command only operates on those rows of the CHILD table for which corresponding rows exist in the PARENT table
+Delete command only operates on the rows from the PARENT table for which there are no corresponding records in the CHILD table.
+*/
+
+CREATE TABLE Orders 
+( 
+OrderID INT NOT NULL AUTO_INCREMENT, 
+CustomerID INT NOT NULL, 
+OrderNumber CHAR(50) NOT NULL, 
+OrderDate DATETIME NOT NULL, 
+ShipmentDate DATETIME NULL, 
+OrderStatus CHAR(10) NULL, 
+Notes VARCHAR(750) NULL, 
+PRIMARY KEY (OrderID), 
+FOREIGN KEY FK_Customer_CusomterID(CustomerID) REFERENCES Customers(CustomerID) 
+); 
+
+Example 2:
+
+--Create OrderItems table and add define a foreign key on PRODUCTID of OrderItems table referring to PRODUCTID of ORDERS table.
+
+CREATE TABLE OrderItems 
+( 
+OrderItemID INT NOT NULL AUTO_INCREMENT, 
+OrderID INT NOT NULL, 
+ProductID INT NOT NULL, 
+Quantity INT NOT NULL, 
+UnitPrice DECIMAL(10, 2) NOT NULL, 
+Discount DECIMAL(10, 2) NULL, 
+Notes VARCHAR(750) NULL, 
+PRIMARY KEY (OrderItemID) 
+); 
+
+ALTER TABLE OrderItems 
+ADD FOREIGN KEY (ProductID) REFERENCES Products(ProductID); 
+
+Example 3:
+
+--To drop a foreign key ProductID from OrderItems, you would use the ALTER TABLE statement, like so: 
+--In the context of our example, the statement would be: 
+
+ALTER TABLE OrderItems 
+DROP FOREIGN KEY ProductID 
+
+Example 4
+
+/*
+How to present employee and department data in two tables and build the relationship between Department and employee table.
+
+Create DEPARTMENT table with the following data
+ColumnName DataType Size Key
+DeptNo NUMBER Primary Key
+DName VARCHAR2 20 UNIQUE and NOT NULL
+Dlocation VARCHAR2(30) UNIQUE and NOT NULL
+*/
+CREATE TABLE DEPARTMENT
+(
+DeptNo NUMBER PRIMARY KEY,
+Dname VARCHAR2(30) UNIQUE NOT NULL,
+Dlocation VARCHAR2(30) UNIQUE NOT NULL
+)
+/*
+Create EMPLOYEE table with the following data
+ColumnName DataType Size Key
+eNo CHAR 4 PRIMARY KEY
+eName VARCHAR2 30 NOT NULL
+Job VARCHAR2 30
+MANAGER CHAR 4
+JDate TIMESTAMP NOT NULL
+Gender CHAR 1 'M' OR 'F' 
+Salary NUMBER 8,2 DEFAULT 0
+Comission NUMBER 8,2 DEFAULT 0
+Deptno NUMBER 2 FOREIGN KEY REFERENCES DEPARTMENT TABLE, DEPTNO column
+*/
+CREATE TABLE EMPLOYEE 
+(
+eNo CHAR(4) PRIMARY KEY,
+eName VARCHAR2(30) NOT NULL,
+Job VARCHAR2(30) NOT NULL,
+MANAGER CHAR(4),
+JDate TIMESTAMP NOT NULL,
+Gender CHAR(1) CONSTRAINT Gender_CHK GENDER('M','F'),
+Salary NUMBER(8,2) DEFAULT 0,
+Comission NUMBER(8,2) DEFAULT 0,
+Deptno NUMBER(2) FOREIGN KEY REFERENCES DEPARTMENT(Deptno)
+)
+
+
+/*
+
+Activity Section
+
+An example of FOREIGN KEY constraint using ON DELETECASCADE option is as follows
+
+Create the Customers(Parent) table
+*/
+
+
+ CREATE TABLE customers
+  (
+     customerid   INT NOT NULL IDENTITY(1, 1),
+     firstname    CHAR(50) NULL,
+     middlename   CHAR(50) NULL,
+     lastname     CHAR(50) NULL,
+     address      CHAR(250) NULL,
+     email        CHAR(200) NULL,
+     phone        CHAR(50) NULL,
+     notes        VARCHAR(750) NULL,
+     balancenotes VARCHAR(750) NULL,
+     PRIMARY KEY (customerid)
+  );
+
+----Create the Orders(Child) table
+
+CREATE TABLE orders
+  (
+     orderid      INT NOT NULL IDENTITY(1, 1),
+     customerid   INT NOT NULL,
+     ordernumber  CHAR(50) NOT NULL,
+     orderdate    DATETIME NOT NULL,
+     shipmentdate DATETIME NULL,
+     orderstatus  CHAR(10) NULL,
+     notes        VARCHAR(750) NULL,
+     PRIMARY KEY (orderid),
+     FOREIGN KEY (customerid) REFERENCES customers (customerid) ON DELETE
+     CASCADE
+  );
+
+
+----Insert rows into the Customer and Orders tables
+
+INSERT INTO customers
+            (firstname,
+             middlename,
+             lastname,
+             address,
+             email,
+             phone,
+             notes)
+VALUES      ('Joe',
+             'Greg',
+             'Doaks',
+             '2356 Elm St.',
+             'joedoaks@sfghwert.com',
+             '(310) 555-1212',
+             'A note'),
+            ('Paul',
+             'Muad-Dib',
+             'Atreides',
+             '123 Caladan Drive',
+             'patreides@sietchtabr.com',
+             '(818) 555-3678',
+             'Outworlder, now a Fremen'),
+            ('Mr.',
+             NULL,
+             'Spock',
+             '1701 Enterprise Drive',
+             'mrspock@NCC1701Enterprise.gov',
+             '(717) 555-3457',
+             'Perceptive naval and science officer'),
+            ('Joseph',
+             'Force',
+             'Crater',
+             '1313 Mockingbird Lane',
+             'judgecrater@e56gfwrty.com',
+             '(212) 555-5678',
+             'Might undisappear any minute . . .'),
+            ('James',
+             'Tiberias',
+             'Kirk',
+             '1701 Enterprise Drive',
+             'jtkirk@NCC1701Enterprise.gov',
+             '(717) 555-3457',
+             'Naval combat veteran'),
+            ('Luke',
+             NULL,
+             'Skywalker',
+             '456 Tosche Station',
+             'lskywalker@moseisley.gov',
+             '(213) 555-3421',
+             'Pilot and mystic'),
+            ('Chew',
+             NULL,
+             'Bacca',
+             'Docking Bay 94, Kashyyyk',
+             'chewbacca@rebelalliance.edu',
+             '(213) 555-8523',
+             'Executive Officer, Millennium Falcon'),
+            ('Leto',
+             'II',
+             'Atreides',
+             '1870 Arrakeen Ct.',
+             'latreides@arrakeen.org',
+             '(310) 555-5462',
+             'Spice dealer'),
+            (NULL,
+             'Paul',
+             'Jones',
+             '126 Bonhomme Richard Ave.',
+             'jpjones@bonhommerichard.edu',
+             '(216) 555-6232',
+             'Admiral'),
+            (NULL,
+             'Han',
+             'Solo',
+             '6136 Yavin St.',
+             'hsolo@dagobah.edu',
+             '(345) 555-5434',
+             'Freighter Pilot'),
+            (NULL,
+             NULL,
+             'Gordon',
+             '21 Mars Drive',
+             'Gordon@flashgordon.edu',
+             '(260) 555-3461',
+             'Pilot'),
+            (NULL,
+             NULL,
+             'Zarkov',
+             '55 Mongo Way',
+             'zarkov@mingofmongo.gov',
+             '(818) 555-3562',
+             'Physics Researcher'),
+            ('Gandalf',
+             NULL,
+             NULL,
+             '18 Middle Earth Ave.',
+             'gan@dalf.gov',
+             '(310) 555-9182',
+             'Wizard'),
+            ('Klaatu',
+             NULL,
+             NULL,
+             '33 Nikto Way',
+             'klaatu@klaatubaradanikto.edu',
+             '(310) 555-0822',
+             'Droid'),
+            ('Master',
+             NULL,
+             'Yoda',
+             '1818 Coruscant',
+             'yoda@coruscant.edu',
+             '(211) 555-1111',
+             'Jedi Master'),
+            ('QuiGon',
+             NULL,
+             'Jinn',
+             '3547 Coruscant',
+             'quigon@oldglobe.edu',
+             '(211) 555-4444',
+             'Jedi Master');
+
+INSERT INTO orders
+            (customerid,
+             ordernumber,
+             orderdate,
+             shipmentdate,
+             orderstatus,
+             notes)
+VALUES      (2,
+             'ABC123',
+             '20170302',
+             '20170212',
+             'shipped',
+             'shipped on time'),
+            (3,
+             'BCQ857',
+             '23170307',
+             '23170308',
+             'pending',
+'for appropriate products, fully charge all power cells before packing'),
+            (4,
+             'RST321',
+             '19300419',
+             '19330522',
+             'returned',
+             'customer disappeared'),
+            (6,
+             'YQW672',
+             '20091201',
+             '20100117',
+             'shipped',
+             'repeat customer'),
+            (7,
+             'DTR321',
+             '29300419',
+             '29330522',
+             'shipped',
+             'customer requested freight forwarding'),
+            (3,
+             'BCQ858',
+             '23170318',
+             '23170329',
+             'shipped',
+             'customer prefers open-source software');
+
+--Find the customer who is placed more than one orders
+
+SELECT o.customerid,
+       Count(*) OrderCnt
+FROM   customers c
+       INNER JOIN orders o
+               ON c.customerid = o.customerid
+GROUP  BY o.customerid
+HAVING Count(*) > 1
+
+-- Fetch the details of customer and order for the customer id =3
+SELECT *
+FROM   customers
+WHERE  customerid = 3
+
+SELECT *
+FROM   orders
+WHERE  customerid = 3
+
+-- Delete the rows from the parent table customers. On use of ON DELETE CASCADE, we can see the deletion of rows from
+-- child table orders
+
+DELETE FROM customers
+WHERE  customerid = 3
+
+
+-- Verify the customer and order for the customer id =3 . You'll see that records are deleted automatically from the child table
+
+SELECT *
+FROM   customers
+WHERE  customerid = 3
+
+SELECT *
+FROM   orders
+WHERE  customerid = 3  
