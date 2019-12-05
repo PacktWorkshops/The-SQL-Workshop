@@ -6,7 +6,6 @@ CREATE TABLE Products
 	ProductCategoryID INT NOT NULL,
 	SupplierID INT NOT NULL,
 	ProductName CHAR(50) NOT NULL,
-	ProductImage MEDIUMBLOB NULL,
 	NetRetailPrice DECIMAL(10, 2) NULL,
 	AvailableQuantity INT NOT NULL,
 	WholesalePrice DECIMAL(10, 2) NOT NULL,
