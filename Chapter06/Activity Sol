@@ -1,0 +1,9 @@
+/* Activity 6.01: Implementing JOINS */
+
+SELECT Orders.OrderNumber,
+OrderItems.UnitPrice,
+OrderItems.Quantity,
+Products.ProductName
+FROM Orders JOIN OrderItems ON Orders.OrderID = 
+  OrderItems.OrderID 
+  JOIN Products ON OrderItems.ProductID = Products.ProductID
