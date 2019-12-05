@@ -1,0 +1,9 @@
+/* Activity 5.01: Combining Conditions to Extract Store Data */
+SELECT   
+    ProductName as [Product Name],  
+    NetRetailPrice as [Product Retail Price], 
+    AvailableQuantity as [Available Quantity]    
+From Products   
+WHERE NetRetailPrice <= 24.99   
+    AND AvailableQuantity >=38  
+    AND NOT ProductName LIKE ‹10%›;
