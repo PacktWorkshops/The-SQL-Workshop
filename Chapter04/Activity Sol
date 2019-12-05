@@ -1,0 +1,16 @@
+/* Activity 4.01: Displaying Particular Columns from the Table */
+
+SELECT FirstName as [First Name], LastName as 
+  [Last Name], Phone as [Phone Number]
+FROM Customers
+
+/* Activity 4.02: Extracting the Top Five Highest Paid Items */
+
+SELECT TOP 5
+    Products.ProductName as [Product Name],
+    Products.NetRetailPrice as [Product Retail Price],
+    Products.AvailableQuantity as [Available Quantity],
+    Products.AvailableQuantity * Products.NetRetailPrice as [Total Price of Available QTY]
+FROM Products 
+
+ORDER BY Products.NetRetailPrice Desc
