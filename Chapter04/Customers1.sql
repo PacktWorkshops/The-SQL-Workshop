@@ -1,12 +1,12 @@
 create table Customers1
 (
-	FirstName nvarchar(50) ,
-	MiddleName nvarchar(50) ,
-	LastName nvarchar(50) ,
-	HomeAddress nvarchar(250) ,
-	Email nvarchar(200) ,
-	Phone nvarchar(50) ,
-	Notes nvarchar(250)
+	FirstName varchar(50) ,
+	MiddleName varchar(50) ,
+	LastName varchar(50) ,
+	HomeAddress varchar(250) ,
+	Email varchar(200) ,
+	Phone varchar(50) ,
+	Notes varchar(250)
 );
 INSERT INTO Customers1 ( FirstName, MiddleName, LastName, HomeAddress, Email, Phone, Notes )
 VALUES('Joe', 'Greg', 'Smith', '2356 Elm St.', 'joesmith@sfghwert.com', '(310) 555-1212', 'Always gets products home delivered'),
