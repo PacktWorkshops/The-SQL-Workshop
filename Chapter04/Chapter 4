@@ -1,593 +1,75 @@
-/*
-In most of the exercise, the most common operation you'll perform is to drop a database or table, only if it exists. 
-MySQL has a built-in clause for this operation. 
-*/
+/* Retrieving All Columns of a Table */ 
+use PACKT_ONLINE_SHOP;
+SELECT * FROM ProductCategories;
 
-DROP DATABASE IF EXISTS EMPLOYEE; 
+/* Exercise 4.01: Selecting Columns from a Table */
 
-CREATE DATABASE IF NOT EXISTS EMPLOYEE; 
+use PACKT_ONLINE_SHOP; 
+SELECT ProductCategoryID, ProductCategoryName 
+FROM ProductCategories;
 
-USE EMPLOYEE;
+SELECT ProductCategoryName, ProductCategoryID 
+FROM ProductCategories;
 
+/* Exercise 4.02: Aliasing the Column Headers */
+SELECT ProductCategoryName AS CATEGORY, ProductCategoryID AS ID 
+FROM ProductCategories;
 
-Example 1:
+SELECT ProductCategoryName AS 'PRODUCT CATEGORY', ProductCategoryID AS ID 
+FROM ProductCategories;
 
-/* How to perform a simple insert into the Department table*/
+/* Ordering Rows According to a Particular Column */
 
- DROP TABLE IF EXISTS department;
+SELECT ProductCategoryName AS 'CATEGORY NAME', ProductCategoryID AS ID 
+FROM ProductCategories
+ORDER BY ProductCategoryName ASC; 
 
-CREATE TABLE department
-  (
-     departmentno   INT PRIMARY KEY,
-     departmentname VARCHAR(20) NOT NULL,
-     departmentloc  VARCHAR(50) NOT NULL
-  );  
+SELECT ProductCategoryName AS 'CATEGORY NAME', ProductCategoryID AS ID 
+FROM ProductCategories
+ORDER BY 'CATEGORY NAME' DESC;
 
-/* Insert statement */
+/* Ordering Rows According to Multiple Columns */ 
+SELECT FirstName, CustomerID 
+FROM Customers;
 
-INSERT INTO department ( 
-    departmentNo, 
-    departmentName, 
-    departmentLoc 
-) 
-VALUES ( 
-1, 
-'Engg', 
-'Texas' 
-); 
+SELECT FirstName, CustomerID 
+FROM Customers 
+ORDER BY FirstName, CustomerID DESC;
 
+SELECT FirstName, CustomerID 
+FROM Customers 
+ORDER BY 1, 2;
 
-Example 2:
+SELECT FirstName, CustomerID 
+FROM Customers 
+ORDER BY 1 DESC, 2 DESC;
 
-/* Perform multiple insert statement*/
+/* Exercise 4.03: Using the LIMIT Keyword */
+SELECT ProductName, NetRetailPrice
+FROM Products
+ORDER BY NetRetailPrice DESC
+LIMIT 5;
 
-INSERT INTO department 
-            (departartmentno, 
-             departmentname, 
-             departmentloc) 
-VALUES      ( 40, 
-              'Sales', 
-              'NJ' ), 
-            ( 50, 
-              'Marketing', 
-              'MO' ), 
-            ( 60, 
-              'Testing', 
-              'MN' ); 
-              
- Example 3:
- 
- /* MSSQL Server - Perform insert along with a default columns */
- 
-  DROP TABLE IF EXISTS department;
-CREATE TABLE department
-             (
-                          departmentno   int IDENTITY(10, 10) PRIMARY KEY,
-                          departmentname varchar(20) NOT NULL,
-                          departmentloc  varchar(50) DEFAULT 'NJ' departmentestdate datetime DEFAULT getdate()
-             ) 
+SELECT ProductName, NetRetailPrice
+FROM Products 
+ORDER BY NetRetailPrice
+LIMIT 4;
 
-INSERT INTO department
-            (departmentname) 
-VALUES      ( 'MyDepartment' ); 
+/* Using DISTINCT */
 
- Example 4:
- 
- /* MySQL Server - Perform insert along with a default columns */
- 
- CREATE TABLE department
-  ( 
-     departmentno      INT PRIMARY KEY auto_increment, 
-     departmentname    VARCHAR(20) NOT NULL, 
-     departmentloc     VARCHAR(50) DEFAULT 'NJ', 
-     departmentestdate TIMESTAMP DEFAULT now() 
-  ); 
-  
-INSERT INTO department
-            (departmentname) 
-VALUES      ( 'MyDepartment' ); 
+SELECT DISTINCT FirstName, LastName
+FROM Customers1;
 
+SELECT DISTINCT FirstName
+FROM Customers1;
 
-Example 5:
+/*Exercise 4.05: Calculating the Line Item Total */ 
 
---you can add multiple rows into the table, and the default columns will pick their values accordingly. Say, you would like to add two more departments, Administration and IT. 
+SELECT ProductID, Quantity, UnitPrice, (Quantity*UnitPrice) AS 'Line Item Total'
+FROM OrderItems;
 
-INSERT INTO department
-            (departmentname, 
-             departmentloc) 
-VALUES      ( 'Administration', 
-              DEFAULT ), 
-            ( 'IT', 
-              DEFAULT ); 
-  
- Example 6:
- 
- --you can also use a SELECT statement to add multiple records into a table. Here is how: 
+/* Exercise 4.06: Calculating Discount */
 
-INSERT INTO department(departmentName,departmentLoc) 
-SELECT departmentName, departmentLoc FROM department; 
+SELECT ProductID, Quantity, UnitPrice, (Quantity*UnitPrice) AS 'Line Item Total', Discount, ((Quantity*UnitPrice)-(Quantity*Discount)) AS 'Price After Discount' 
+FROM OrderItems;
 
-SELECT * from department;
-
-Example 7:
-
---let’s delete the rows where departmentNo is ‘>’ 4. This will delete the two rows where departmentNo is 5 and 6.
-
-DELETE from department where departmentNo>4; 
-
-Example 8:
-
--- Auto increment scenario
-
-insert into department(departmentname,departmentLoc) values('Sales','LV'); 
-
---On selecting the rows, we can see that auto_increment column starts at 7. 
-
-mysql> select * from department; 
-/*
-
-+--------------+----------------+---------------+---------------------+ 
-
-| departmentNo | departmentName | departmentLoc | departmentEstDate   | 
-
-+--------------+----------------+---------------+---------------------+ 
-
-|            1 | engg           | NJ            | 2019-05-27 11:56:53 | 
-
-|            2 | engg           | NJ            | 2019-05-27 11:57:10 | 
-
-|            3 | engg           | TX            | 2019-05-27 11:57:24 | 
-
-|            4 | engg           | NJ            | 2019-05-27 11:59:40 | 
-
-|            7 | Sales          | LV            | 2019-05-27 12:03:42 | 
-
-+--------------+----------------+---------------+---------------------+ 
-
-5 rows in set (0.00 sec) 
-*/
-
-Example 9:
-
---In-order to reset the auto_increment column, run the following ALTER STATEMENT 
-
-mysql> ALTER TABLE department AUTO_INCREMENT = 5; 
-
---Now, Perform the insert statement
-
-mysql> insert into departmentTwo(departmentname,departmentLoc) values('Sales','LV'); 
-
-mysql> select * from department; 
-/*
-+--------------+----------------+---------------+---------------------+ 
-
-| departmentNo | departmentName | departmentLoc | departmentEstDate   | 
-
-+--------------+----------------+---------------+---------------------+ 
-
-|            1 | engg           | NJ            | 2019-05-27 11:56:53 | 
-
-|            2 | engg           | NJ            | 2019-05-27 11:57:10 | 
-
-|            3 | engg           | TX            | 2019-05-27 11:57:24 | 
-
-|            4 | engg           | NJ            | 2019-05-27 11:59:40 | 
-
-|            5 | Sales          | LV            | 2019-05-27 12:13:11 | 
-
-+--------------+----------------+---------------+---------------------+ 
-
-5 rows in set (0.00 sec) 
-
- */
- 
- Example 10:
- 
-/*
-Insert using stored procedure 
-
-Note: The below section is applicable only to MSSQL Server. Unfortunately, the syntax is not supported in MySQL. The following SQL require SQL 2017 
- */
- 
- DROP TABLE IF EXISTS tlog_spaceused;
- CREATE TABLE tlog_spaceused
-  (
-     database_name     VARCHAR(200),
-     database_size     VARCHAR(20),
-     unallocated_space VARCHAR(18),
-     reserved          VARCHAR(20),
-     data              VARCHAR(20),
-     index_size        VARCHAR(20),
-     unused            VARCHAR(20)
-  );
-
-INSERT INTO tlog_spaceused
-EXEC Sp_msforeachdb
-  @command1 = "use [?] exec sp_spaceused  @oneresultset = 1"; 
-  
-SELECT * FROM  tlog_spaceused;
-
-
-
-Example 11:
-
-/* Update Example*/
-
---To demonstrate, employees table is created with empno and emailaddress columns
-
-USE EMPLOYEE;
-
-CREATE TABLE employees (
-    empno      INT             NOT NULL AUTO_INCREMENT, 
-    firstname  VARCHAR(14)     NOT NULL,
-    lastname   VARCHAR(16)     NOT NULL,    
-    birthdate  DATE            NOT NULL,
-    gender      ENUM ('M','F')  NOT NULL,  
-    joindate   DATE            NOT NULL,
-    salary DECIMAL(10,3) NOT NULL,
-    comm DECIMAL(10,3),
-    email varchar(100) NOT NULL,
-    departno int REFERENCES department(departmentNo),
-    PRIMARY KEY (empno)                  
-);
-
-
-
-INSERT INTO employees (
-    firstname,
-    lastname,
-    birthdate,
-    gender,
-    joindate,
-    salary,
-    comm,
-    email,
-    departno) 
-VALUES
-(
-    'Steve',
-    'Cross',
-    '1981-01-01',
-    'M',
-    '2015-05-20',
-    8000,
-    0,
-    'Steve.Cross@awesomeness.com',
-    1
-),
-(
-    'Lois',
-    'Jennings',
-    '1980-03-02',
-    'F',
-    '2013-05-10',
-    8500,
-    50,
-    'Lois.Jennings@awesomeness.com',
-    1
-),
-(
-    'Edie',
-    'Senior',
-    '1982-10-01',
-    'M',
-    '2014-02-01',
-    10000,
-    500,
-    'Edie.Senior@awesomeness.com',
-    2
-),
-(
-    'Charlene',
-    'Holloway',
-    '1985-06-01',
-    'M',
-    '2013-10-20',
-    18000,
-    1000,
-    'Charlene.Holloway@awesomeness.com',
-    3
-);
-
-mysql> select * from employees;
--------+-----------+----------+------------+--------+------------+-----------+----------+-----------------------------------+----------+
- empno | firstname | lastname | birthdate  | gender | joindate   | salary    | comm     | email                             | departno |
--------+-----------+----------+------------+--------+------------+-----------+----------+-----------------------------------+----------+
-     1 | Steve     | Cross    | 1981-01-01 | M      | 2015-05-20 |  8000.000 |    0.000 | Steve.Cross@awesomeness.com       |        1 |
-     2 | Lois      | Jennings | 1980-03-02 | F      | 2013-05-10 |  8500.000 |   50.000 | Lois.Jennings@awesomeness.com     |        1 |
-     3 | Edie      | Senior   | 1982-10-01 | M      | 2014-02-01 | 10000.000 |  500.000 | Edie.Senior@awesomeness.com       |        2 |
-     4 | Charlene  | Holloway | 1985-06-01 | M      | 2013-10-20 | 18000.000 | 1000.000 | Charlene.Holloway@awesomeness.com |        3 |
--------+-----------+----------+------------+--------+------------+-----------+----------+-----------------------------------+----------+
-
-  mysql> select empno, email from employees; 
-/*
-+-------+-----------------------------------+ 
-
-| empno | email                             | 
-
-+-------+-----------------------------------+ 
-
-|     1 | Steve.Cross@awesomeness.com       | 
-
-|     2 | Lois.Jennings@awesomeness.com     | 
-
-|     3 | Ava-May@awesomeness.com       | 
-
-|     4 | Charlene.Holloway@awesomeness.com | 
-
-+-------+-----------------------------------+ 
-
-4 rows in set (0.00 sec) 
-*/
-
-UPDATE employees 
-SET 
-   EmailAddress = 'Ava-May.Rodgers@awesomenes.com' 
-WHERE empno = 3 
-
-Example 12:
-
---we are going to change the modified date on all the rows. We do this using the following query: 
-
-mysql> update department set departmentEstDate=now(); 
-
-Example 13:
-
---You would also like to set their departmentEstdate  to next day. 
-
-mysql> UPDATE department 
-     SET departmentLoc='GA', 
-     departmentEstDate  = Now()+1; 
-     
-     
- Example 14:
- 
- -- Update using Alias
- 
- UPDATE department D 
-    SET D.departmentLoc='GA', 
-    D.departmentEstDate  = Now()+1;
-
-
-Example 15:
-
---Conditional update of records using WHERE clause 
-
-
-mysql> update employees e set comm=2000 where departno=3; 
-
-Query OK, 1 row affected (0.13 sec) 
-
-Exmaple 16:
-
----In the following example, we are limiting three records where update the salary and it is sorted in descending order and they are getting the least commission. 
-
-UPDATE employees SET comm=1000 
-WHERE empno IN ( 
-    SELECT empno FROM ( 
-        SELECT empno FROM employees where comm<=500 
-        ORDER BY salary desc, comm ASC   
-        LIMIT 0, 3 
-    ) stg 
-); 
-
-mysql> select firstname, salary, comm from employees; 
-+-----------+-----------+----------+ 
-| firstname | salary    | comm     | 
-+-----------+-----------+----------+ 
-| Steve     |  8000.000 | 1000.000 | 
-| Lois      |  8500.000 | 1000.000 | 
-| Edie      | 10000.000 | 1000.000 | 
-| Charlene  | 18000.000 | 2000.000 | 
-+-----------+-----------+----------+ 
-
-4 rows in set (0.00 sec) 
-
- 
-Example 17:
-
- ---Common Table Expression along with TOP 
- 
- WITH 
-   employeeCTE 
-    AS 
-    ( 
-        SELECT  
-            * 
-        FROM employees 
-where comm>500 
-ORDER BY salary desc 
-LIMIT 100 
-) 
-UPDATE employees SET comm=2492 
-WHERE empno IN  
-(SELECT empno FROM employeeCTE);
-
---select the rows
-SELECT * 
-FROM employees WHERE comm = 2492 
-
-Example 18:
-
----Update using computed values
-
-UPDATE employees 
-    SET 
-        Salary = Salary * 1.17 
-    WHERE Rating = 5 
-    
- ---You could even use a compound operator (+=, *=, etc.) to update the column values. 
-
-UPDATE Employees 
-    SET 
-        Salary =* 1.17 
-    WHERE Rating = 5 
-    
-Example 19:
- 
- --Update with SQL Joins 
-UPDATE employees e 
-       INNER JOIN department d 
-               ON e.departno = d.departmentno 
-                  AND d.departmentname = 'ENGG' 
-SET    salary = salary + ( salary * 15 / 100 ) 
-
-Example 20:
-
----The DELETE operation
-
---For example, if you would like to delete all the employee records from the Employee table (careful, very careful), you would use the following query: 
-
-DELETE FROM employees 
-    WHERE empno >1234 
-
----If you would like to remove some fifty random rows from the employees table 
-
-DELETE FROM employees LIMIT 50 
-
-Example 21:
-
----Deleting duplicate rows 
-
---When given such a situation, we first identify where the duplicates exist, and run a SELECT query on those columns. 
-
-mysql> SELECT departmentname, 
-       departmentloc, 
-       Count(*) 
-FROM   department 
-GROUP  BY departmentname, 
-          departmentloc 
-HAVING Count(*) > 1; 
-+----------------+---------------+----------+ 
-| departmentname | departmentloc | count(*) | 
-+----------------+---------------+----------+ 
-| Administration | NJ            |        2 | 
-| IT             | NJ            |        2 | 
-| ENGG           | TX            |        6 | 
-+----------------+---------------+----------+ 
-3 rows in set (0.06 sec) 
-
-
-Example 22:
-
----Deleting rows using Joins 
-DELETE d1 
-FROM       department d1 
-INNER JOIN department d2 
-where      d1.departmentno < d2.departmentno 
-AND        d1.departmentname=d2.departmentname 
-AND        d1.departmentloc=d2.departmentloc
-
-----You can validate the rows by running the following SQL statement. 
-
-mysql>SELECT   departmentname, 
-         departmentloc, 
-         Count(*) 
-FROM     department 
-GROUP BY departmentname, 
-         departmentloc 
-HAVING   Count(*)>1;
-
-Example 23:
-
----Partition By Clause
-
-WITH departmentcte 
-     AS (SELECT *, 
-                Row_number() 
-                  OVER ( 
-                    partition BY departmentname, departmentloc 
-                    ORDER BY departmentno) AS row_num 
-         FROM   department) 
-SELECT departmentno 
-FROM   departmentcte 
-WHERE  row_num <> 1 
-
-Example 24:
-
---Deleting duplicates using Partition By clause and CTE expression
-
-WITH departmentcte 
-     AS (SELECT *, 
-                Row_number() 
-                  OVER ( 
-                    partition BY departmentname, departmentloc 
-                    ORDER BY departmentno) AS row_num 
-         FROM   department) 
-DELETE FROM department 
-WHERE  departmentno IN (SELECT departmentno 
-                        FROM   departmentcte 
-                        WHERE  row_num <> 1) 
-                        
-                        
-Example 25:
-
-----Deleting rows using SQL sub-queries 
-
-DELETE FROM department 
-WHERE  departmentno IN(SELECT departmentno 
-                       FROM   (SELECT *, 
-                                      Row_number() 
-                                        OVER ( 
-                                          partition BY departmentname, 
-                                        departmentloc 
-                                          ORDER BY departmentno) AS row_num 
-                               FROM   department) STG 
-                       WHERE  stg.row_num > 1) 
-                       
-  Example 26:
-  
-  ----Information_Schema internal tables
-  
-  SELECT t.table_name, 
-       t.table_type, 
-       t.data_length, 
-       t.index_length, 
-       t.create_time, 
-       t.update_time, 
-       t.table_collation, 
-       t.table_comment 
-FROM   information_schema.tables t 
-WHERE  information_schema.tables.table_schema = 'world' 
-
-Example 27:
-
-----To list all columns in all tables of the database, you can join the information_schema.tables and information_schema.columns
-
-SELECT t.table_name, 
-       c.column_name, 
-       c.column_type, 
-       c.column_key, 
-       c.is_nullable, 
-       c.column_comment 
-FROM   information_schema.tables t, 
-       information_schema.columns c 
-WHERE  t.table_schema = 'world' 
-       AND t.table_schema = c.table_schema 
-       AND c.table_name = c.table_name 
-ORDER  BY t.table_name 
-
-Exmaple 28:
-
----The following query IS used TO list ALL the constraints that are created ON the department TABLE. you can exclude the c.table_name conditional clause TO list ALL the constraints that are created IN the world DATABASE.
-
-SELECT c.table_name,
-       c.column_name, 
-       c.constraint_name, 
-       c.referenced_table_name, 
-       c.referenced_column_name 
-FROM   information_schema.key_column_usage c 
-WHERE  c.table_schema = 'world' 
-AND    c.table_name = 'department'
- 
-Exmaple 29:
-
-----The following query IS used TO list ALL the indexes that are created ON the department TABLE. you can exclude the c.table_name conditional clause TO list ALL the details OF ‘world’ DATABASE.
-
-SELECT s.table_name,
-       s.column_name, 
-       s.index_name, 
-       s.index_type 
-FROM   information_schema.statistics s 
-WHERE  s.table_schema = 'world' 
-AND    s.table_name = 'department'
