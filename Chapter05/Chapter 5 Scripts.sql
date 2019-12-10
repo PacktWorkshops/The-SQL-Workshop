@@ -1,95 +1,77 @@
-/****** Introduction To SQL Chapter Five  Scripts ******/
+/*The WHERE Clause Syntax*/
+USE studentdemo; 
+SELECT *
+FROM Student;
 
-/*  SELECT SYNTAX */
+SELECT *
+FROM Student
+WHERE course = 'Electronics';
 
-SELECT * FROM ProductCategories;
+/* Exercise 5.01: Implementing Logical Operators in the WHERE Clause */
 
-/*Selects datetime at the moment*/
-SELECT GETDATE();
+USE PACKT_ONLINE_SHOP;
+SELECT ProductName AS 'High-value Products', NetRetailPrice
+FROM Products
+WHERE NetRetailPrice > 14.99
 
-/* SELECTING  LIMITED COLUMNS  */
+USE PACKT_ONLINE_SHOP;
+SELECT  ProductName AS [High-value Products], NetRetailPrice
+FROM Products
+WHERE NetRetailPrice >= 14.99
 
-SELECT ProductCategoryID, ProductCategoryName 
-FROM ProductCategories;
+/*Exercise 5.02: Using the BETWEEN Operator*/
+SELECT ProductName,NetRetailPrice
+FROM Products
+WHERE NetRetailPrice BETWEEN 14.99 AND 50 
+ORDER BY NetRetailPrice;
 
+/* Exercise 5.03: Using the != and <> Operators */
 
+SELECT ProductName,NetRetailPrice
+FROM Products
+WHERE ProductName != 'tomato sauce'
+ORDER BY NetRetailPrice;
 
-SELECT ProductCategoryName, ProductCategoryID 
-FROM ProductCategories;
+SELECT ProductName,NetRetailPrice
+FROM Products
+WHERE ProductName <> 'tomato sauce'
+ORDER BY NetRetailPrice;
 
+/*The LIKE Operator*/
 
+SELECT FirstName, LastName, Phone 
+FROM Customers
+WHERE FirstName LIKE '_o%';
 
-/* USING NAMING ALIASES */
+/*Exercise 5.04: Using the LIKE Operator to Check a Pattern at the Beginning of a String8/
 
+SELECT FirstName AS 'Customers from LA', Phone 
+FROM Customers
+WHERE Phone LIKE '(310)%';
 
-SELECT ProductCategoryName AS CATEGORY, ProductCategoryID AS ID 
-FROM ProductCategories;
+/*Exercise 5.05: Using the LIKE Operator to Check for a Specified Length*/
 
+SELECT FirstName, LastName, Phone 
+FROM Customers
+WHERE FirstName LIKE '___';
 
-SELECT ProductCategoryName AS [CATEGORY NAME], ProductCategoryID AS ID 
-FROM ProductCategories;
+/*Exercise 5.06: Searching for NULL Values*/
 
+SELECT MiddleName, LastName, Phone 
+FROM Customers
+WHERE FirstName IS NULL;
 
-/* ORDERING RESULTS */
+/*Exercise 5.07: Querying Multiple Conditions*/
 
-SELECT ProductCategoryName   AS [CATEGORY NAME], ProductCategoryID  AS ID 
-FROM ProductCategories
-ORDER BY [CATEGORY NAME] ASC;
+SELECT *
+FROM Customers
+WHERE FirstName = 'Joe' AND Phone LIKE '(310)%';
 
+SELECT FirstName, LastName, Phone
+FROM Customers
+WHERE FirstName = 'Joe' OR Phone LIKE '(310)%'; 
 
-SELECT ProductCategoryName   AS [CATEGORY NAME], ProductCategoryID  AS ID 
-FROM ProductCategories
-ORDER BY [CATEGORY NAME] DESC;
+SELECT FirstName, LastName, Phone,Notes
+FROM Customers
+WHERE FirstName LIKE 'Jo%' AND (Phone LIKE '(310)%' OR Phone LIKE '(210)%') AND NOT LastName = 'Carter';
 
-SELECT FirstName, CustomerID 
-FROM Customers ;
-
-
-SELECT FirstName, CustomerID 
-FROM Customers 
-ORDER BY FirstName, CustomerID DESC;
-
-SELECT FirstName, CustomerID 
-FROM Customers 
-ORDER BY 1, 2;  
-
-/* USING TOP AND DISTINCT */
-
-SELECT TOP 5  ProductName,NetRetailPrice
-FROM Products 
-ORDER BY ProductName;
-
-SELECT TOP 50 PERCENT  ProductName,NetRetailPrice
-FROM Products 
-ORDER BY ProductName  ;
-
-SELECT FirstName,LastName, Address
-FROM Customers;
-
-SELECT DISTINCT FirstName,LastName, Address
-FROM Customers;
-
-SELECT DISTINCT FirstName, Address
-FROM Customers;
-
-/* USING MATHEMATICAL EXPRESSIONS */
-
-SELECT ProductID, Quantity,UnitPrice, (Quantity*UnitPrice) AS [Line Item Total]
-FROM OrderItems;
-
-
-SELECT ProductID, Quantity,UnitPrice, (Quantity*UnitPrice) AS [Line Item Total], Discount, ((Quantity*UnitPrice)-((Quantity*UnitPrice)*Discount)) AS [Price After Discount] 
-FROM OrderItems;
-
-
-
-/*  CHAPTER FIVE ACTIVITY SOLUTION*/
-
-Select TOP 5
-	   Products.ProductName as [Product Name],
-	   Products.NetRetailPrice as [Product Retail Price],
-	   Products.AvailableQuantity as [Available Quantity],
-	   Products.AvailableQuantity * Products.NetRetailPrice as [Total Price of Available QTY]
-from Products 
-
-ORDER BY Products.NetRetailPrice Desc
