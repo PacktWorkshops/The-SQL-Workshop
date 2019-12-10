@@ -1,74 +1,40 @@
-Example 1:
-/*
-How to create a STUDENT table with the following data
-ColumnName DataType Size Key
-rollNo char 4 Primary Key
-studentName varchar 30  NOT NULL
-Grade CHAR 1 NOT NULL
-Age  INT NOT NULL
-Course VARCHAR 50 NOT NULL*/
-
-CREATE TABLE student
+/* Example 1 */
+create database studentdemo;
+create table Student
 (
-rollNo char(4) PRIMARY KEY,
-studentName varchar(30) NOT NULL,
-Grade CHAR(1) NOT NULL,
-Age INT NOT NULL,
-course VARCHAR(50) NOT NULL
+    StudentID      CHAR (4), 
+    StudentName VARCHAR (30), 
+    grade       CHAR(1), 
+    age         INT, 
+    course      VARCHAR(50),
+    PRIMARY KEY (StudentID)
 );
-
-OR
-/*Below Create table creates table with rollno as primary key with a specific name student_pk (This is Good Practice)*/
-CREATE TABLE student
+/*Exercise 1.01: Building the PACKT_ONLINE_SHOP Database */
+create database PACKT_ONLINE_SHOP;
+use PACKT_ONLINE_SHOP;
+create table Customers
 (
-rollNo char(4) NOT NULL, 
-studentName varchar(30) NOT NULL,
-Grade CHAR(1) NOT NULL,
-Age INT NOT NULL,
-Course varchar(50) NOT NULL,
-CONSTRAINT student_pk PRIMARY KEY (rollNo)
+    FirstName varchar(50) ,
+    MiddleName varchar(50) ,
+    LastName varchar(50) ,
+    HomeAddress varchar(250) ,
+    Email varchar(200) ,
+    Phone varchar(50) ,
+    Notes varchar(250)
 );
-/*
-Note:
-The table name can be of 30 characters in length at the maximum.The limitation varies from product to product.
-It can contain alphabets from A to Z and 0 to 9 and Special characters such as under score (_) and Space ' ' enclosed in the square brackets
-The SQL reserved words such as SELECT, INSERT, DELETE, WHERE etc:- are not permitted for use
-*/
+/*Populating Your Tables*/
+USE studentdemo;
+INSERT INTO Student (StudentID, StudentName, grade, age, course) VALUES ('S001', 'Prashanth Jayaram', 'A', 36, 'Computer Science');
+INSERT INTO Student (StudentID, StudentName, grade, age, course) VALUES ('S002', 'Frank Solomon', 'B', 35, 'Physics'), ('S003', 'Rachana Karia', 'B', 36, 'Electronics'), ('S004', 'Ambika Prashanth', 'C', 35, 'Mathematics');
 
-Example 2:
-/*
-Insert few sample rows into a student table
-*/
-insert into student(rollNo,studentName,Grade,Age,Course) values('S001','Prashanth Jayaram','A',36,'Computer Science');
-insert into student(rollNo,studentName,Grade,Age,Course) values('S002','Frank Solomon','B',35,'Physics');
-insert into student(rollNo,studentName,Grade,Age,Course) values('S003','Rachana Karia','B',36,'Electronics');
-insert into student(rollNo,studentName,Grade,Age,Course) values('S004','Nayagam','C',35,'Mathematics');
-insert into student(rollNo,studentName,Grade,Age,Course) values('S005','Chinnu','C',33,'Electronics');
+/*Exercise 1.02: Inserting Values into the Customers Table of the PACKT_ONLINE_SHOP Database*/
 
-Example 3:
-
---How to SELECT without a column name or table?
-
-SELECT concat(' ', 'My', 'first', 'query')
-
-Example 4:
-
---How to SELECT student name, from a student table?
-
-SELECT StudentName FROM student;  
-
-Example 5:
-
---How to select multiple columns from a student table?
-
-SELECT StudentName, Grade, Age FROM student;
-
-Example 6:
-
---How to select all columns from a student table?
-
-SELECT * FROM student; 
-/*
-Note: Primary Key  is a combination of UNIQUE, NOT NULL and clustered Index
-*/
+use PACKT_ONLINE_SHOP;
+INSERT INTO Customers (FirstName, MiddleName, LastName, HomeAddress, Email, Phone, Notes)
+VALUES('Joe', 'Greg', 'Smith', '2356 Elm St.', 'joesmith@sfghwert.com', '(310) 555-1212', 'Always gets products home delivered'),
+('Grace', 'Murray', 'Hopper', '123 Compilation Street', 'gmhopper@ftyuw46.com', '(818) 555-3678', 'Compiler pioneer'),
+('Ada', NULL, 'Lovelace', '22 Algorithm Way', 'adalovelace@fgjw54af.gov', '(717) 555-3457', 'First software engineer'),
+('Joseph', 'Force', 'Crater', '1313 Mockingbird Lane', 'judgecrater@ev56gfwrty.com', '(212) 555-5678', 'Works everyday'),
+('Jacqueline', 'Jackie', 'Cochran', '1701 Flightspeed Avenue', 'jackiecochrane@jryuwp8qe4w.gov', '(717) 555-3457', 'Researcher'),
+(NULL, 'Paul', 'Jones', '126 Bonhomme Richard Ave.', 'jpjones@bonhommerichard.edu', '(216) 555-6232', 'Admiral');
 
