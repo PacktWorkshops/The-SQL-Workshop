@@ -1,96 +1,65 @@
-/****** Introduction To SQL Chapter SIX  Scripts ******/
+/*Exercise 6.01 Implementing Inner Join */
+SELECT Orders.OrderNumber, Orders.OrderStatus, Orders.OrderDate, Customers.FirstName, Customers.LastName, Customers.Email
+FROM Orders JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
 
-/****** WHERE CLAUSE SYNTAX ******/
+/* Exercise 6.02: Implementing RIGHT JOIN*/
 
-SELECT ProductName,NetRetailPrice
-FROM Products
-ORDER BY NetRetailPrice 
+SELECT Customers.FirstName,
+Customers.LastName,
+Customers.Email , 
+Orders.OrderNumber,
+Orders.OrderStatus
 
+FROM Orders RIGHT JOIN Customers ON Orders.CustomerID = Customers.CustomerID
 
-SELECT ProductName,NetRetailPrice
-FROM Products
-WHERE NetRetailPrice > 14.99
-ORDER BY NetRetailPrice
+/*Exercise 6.03: Implementing LEFT JOIN*/
+SELECT   Orders.OrderNumber,
+         Orders.OrderStatus,
+         Payments.PaymentRef,
+         Payments.PaymentType
 
+FROM Payments LEFT JOIN Orders ON Payments.OrderID = Orders.OrderID
 
+SELECT   Orders.OrderNumber,
+         Orders.OrderStatus,
+         Payments.PaymentRef,
+         Payments.PaymentType
 
-SELECT ProductName,NetRetailPrice
-FROM Products
-WHERE NetRetailPrice >= 14.99
-ORDER BY NetRetailPrice
+FROM Orders LEFT JOIN Payments ON Payments.OrderID = Orders.OrderID
 
+/*Exercise 6.04: Implementing FULL JOIN*/
+SELECT    Orders.OrderNumber,
+         Orders.OrderStatus,
+         Customers.FirstName, 
+         Customers.LastName
 
-SELECT ProductName,NetRetailPrice
-FROM Products
-WHERE NetRetailPrice BETWEEN 14.99 AND 50 
-ORDER BY NetRetailPrice
+FROM Orders FULL JOIN Customers ON Orders.CustomerID = Customers.CustomerID
 
+/* Exercise 6.05: Implementing CROSS JOINS */
+Create table Facecards (cardvalue varchar (50)); 
+insert into Facecards (cardvalue) values ('King');
+insert into Facecards (cardvalue) values ('Queen');
+insert into Facecards (cardvalue) values ('Jack');
+insert into Facecards (cardvalue) values ('Ace');
+					   
+Create table CardSuit (suit varchar(50));
+insert into CardSuit (suit) values ('Heart');
+insert into CardSuit (suit) values ('Spade');
+insert into CardSuit (suit) values ('Clubs');
+insert into CardSuit (suit) values ('Diamond');
+				   
+SELECT Facecards.cardvalue,
+       CardSuit.suit
 
-
-SELECT ProductName,NetRetailPrice
-FROM Products
-WHERE NetRetailPrice != 24.99
-ORDER BY NetRetailPrice
-
-
-SELECT ProductName,NetRetailPrice  
-FROM Products
-WHERE NetRetailPrice <> 24.99
-ORDER BY NetRetailPrice
-
-
-
- /****** USING LIKE OPERATOR ******/
-
- SELECT FirstName, LastName, Phone 
-FROM Customers
-WHERE FirstName LIKE 'J%'
-
-
-SELECT FirstName, LastName, Phone 
-FROM Customers
-WHERE FirstName LIKE '_o%'
-
-
-SELECT FirstName, LastName, Phone 
-FROM Customers
-WHERE FirstName LIKE '___'
-
- /****** HANDLING NULLS ******/
-
- SELECT FirstName, LastName, Phone, Notes
-FROM Customers
-WHERE Notes IS NULL 
-
-
-SELECT FirstName, LastName, Phone, Notes
-FROM Customers
-WHERE Notes IS NOT NULL 
-
- /******  Combining Conditions with “AND”, “OR” and “Not” operators  ******/
-
- SELECT FirstName, LastName, Phone
-FROM Customers
-WHERE FirstName = 'Joe' AND Phone LIKE '(310)%' 
-
-
-SELECT FirstName, LastName, Phone
-FROM Customers
-WHERE FirstName = 'Joe' OR Phone LIKE '(310)%' 
-
-
-SELECT FirstName, LastName, Phone,Notes
-FROM Customers
-WHERE FirstName LIKE 'Jo%' AND (Phone LIKE '(310)%' OR Phone LIKE'(210)%') AND NOT LastName = 'Carter'
-
-
- /******  ACTIVITY SOLUTION  ******/
- 
-
-SELECT	ProductName AS[Product Name],
-		NetRetailPrice AS [Product Retail Price],
-		AvailableQuantity AS[Available Quantity]
-From products 
-WHERE NetRetailPrice <= 24.99 AND
-	  AvailableQuantity >=38 AND
-	  NOT ProductName LIKE '10%' 
+FROM Facecards CROSS JOIN CardSuit;
+				    
+/*Exercise 6.06: Implementing a UNION JOIN*/
+SELECT CONCAT(Customers.FirstName,' ',Customers.LastName) as 'FULL NAME',
+        Customers.Phone AS 'Phone Number'
+    FROM Customers
+    UNION 
+    SELECT    Suppliers.ContactPerson AS'Full Name',
+              Suppliers.PhoneNumber AS 'Phone Number'
+    FROM Suppliers
+				    
+				    
