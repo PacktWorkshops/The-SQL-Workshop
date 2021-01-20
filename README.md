@@ -7,7 +7,7 @@
 This is the repository for [The SQL Workshop](https://www.amazon.com/SQL-Workshop-Interactive-Approach-Learning/dp/1838642358/ref=sr_1_1?dchild=1&keywords=The%20SQL%20Workshop&qid=1610708551&sr=8-1&utm_source=github&utm_medium=repository&utm_campaign=9781838642358&utm_term=SQL&utm_content=The%20SQL%20Workshop), published by [Packt](https://www.packtpub.com/?utm_source=github). It contains all the supporting project files necessary to work through the course from start to finish.
 
 ## Requirements and Setup
-<a href="https://www.amazon.com/SQL-Workshop-Interactive-Approach-Learning/dp/1838642358/ref=sr_1_1?dchild=1&keywords=The%20SQL%20Workshop&qid=1610708551&sr=8-1&utm_source=github&utm_medium=repository&utm_campaign=9781838642358&utm_term=SQL&utm_content=The%20SQL%20Workshop"><img src="" alt="The Ruby Workshop" height="270px" width="220px" align="right" this.target="_blank"></a>
+<a href="https://www.amazon.com/SQL-Workshop-Interactive-Approach-Learning/dp/1838642358/ref=sr_1_1?dchild=1&keywords=The%20SQL%20Workshop&qid=1610708551&sr=8-1&utm_source=github&utm_medium=repository&utm_campaign=9781838642358&utm_term=SQL&utm_content=The%20SQL%20Workshop"><img src="" alt="The SQL Workshop" height="270px" width="220px" align="right" this.target="_blank"></a>
 
 The SCRIPTS directory has two subdirectories
 
