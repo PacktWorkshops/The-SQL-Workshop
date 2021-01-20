@@ -2,8 +2,10 @@
 SELECT   
     ProductName as [Product Name],  
     NetRetailPrice as [Product Retail Price], 
-    AvailableQuantity as [Available Quantity]    
+    AvailableQuantity as [Available Quantity]
+    NetRetailPrice * AvailableQuantity as 'Total Price of Available Quantity     
 From Products   
 WHERE NetRetailPrice <= 24.99   
     AND AvailableQuantity >=38  
-    AND NOT ProductName LIKE ‹10%›;
+    AND NOT ProductName LIKE '10%';
+
