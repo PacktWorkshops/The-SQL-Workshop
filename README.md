@@ -3,7 +3,6 @@
 [![GitHub forks](https://img.shields.io/github/forks/PacktWorkshops/The-SQL-Workshop.svg)](https://github.com/PacktWorkshops/The-SQL-Workshop/network)
 [![GitHub stars](https://img.shields.io/github/stars/PacktWorkshops/The-SQL-Workshop.svg)](https://github.com/PacktWorkshops/The-SQL-Workshop/stargazers)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/PacktWorkshops/The-SQL-Workshop/pulls)
-[![Ruby 2.6](https://img.shields.io/badge/Ruby-2.6-blue.svg)](https://rubyinstaller.org/)
 
 This is the repository for [The SQL Workshop](https://www.amazon.com/SQL-Workshop-Interactive-Approach-Learning/dp/1838642358/ref=sr_1_1?dchild=1&keywords=The%20SQL%20Workshop&qid=1610708551&sr=8-1&utm_source=github&utm_medium=repository&utm_campaign=9781838642358&utm_term=SQL&utm_content=The%20SQL%20Workshop), published by [Packt](https://www.packtpub.com/?utm_source=github). It contains all the supporting project files necessary to work through the course from start to finish.
 
