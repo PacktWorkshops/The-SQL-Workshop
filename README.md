@@ -14,7 +14,6 @@ To get started with the project files, you'll need to install [MySQL](https://de
 Please note that the SCRIPTS directory has two subdirectories
 
 * /MYSQL SCRIPTS
-
 * /SQL SERVER SCRIPTS
 
 Each of these subdirectories has two files. One file builds the appropriate PACKT ONLINE SHOP database structure - tables, columns, relations - for MySQL or SQL Server, and one file inserts MySQL or SQL Server data rows into the appropriate database structure.
