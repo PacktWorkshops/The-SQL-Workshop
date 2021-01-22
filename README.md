@@ -9,13 +9,15 @@ This is the repository for [The SQL Workshop](https://www.amazon.com/SQL-Worksho
 ## Requirements and Setup
 <a href="https://www.amazon.com/SQL-Workshop-Interactive-Approach-Learning/dp/1838642358/ref=sr_1_1?dchild=1&keywords=The%20SQL%20Workshop&qid=1610708551&sr=8-1&utm_source=github&utm_medium=repository&utm_campaign=9781838642358&utm_term=SQL&utm_content=The%20SQL%20Workshop"><img src="https://github.com/PacktWorkshops/Workshop-Covers/blob/master/The%20SQL%20Workshop.png" alt="The SQL Workshop" height="330px" width="270px" align="right" this.target="_blank"></a>
 
-The SCRIPTS directory has two subdirectories
+To get started with the project files, you'll need to install [MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/8.0/en/)
 
-/MYSQL SCRIPTS
+Please note that the SCRIPTS directory has two subdirectories
 
-/SQL SERVER SCRIPTS
+* /MYSQL SCRIPTS
 
-and each of these subdirectories has two files. One file builds the appropriate PACKT ONLINE SHOP database structure - tables, columns, relations - for MySQL or SQL Server, and one file inserts MySQL or SQL Server data rows into the appropriate database structure.
+* /SQL SERVER SCRIPTS
+
+Each of these subdirectories has two files. One file builds the appropriate PACKT ONLINE SHOP database structure - tables, columns, relations - for MySQL or SQL Server, and one file inserts MySQL or SQL Server data rows into the appropriate database structure.
 
 ## About The SQL Workshop
 Filled with practical examples and realistic exercises, [The SQL Workshop](https://www.amazon.com/SQL-Workshop-Interactive-Approach-Learning/dp/1838642358/ref=sr_1_1?dchild=1&keywords=The%20SQL%20Workshop&qid=1610708551&sr=8-1&utm_source=github&utm_medium=repository&utm_campaign=9781838642358&utm_term=SQL&utm_content=The%20SQL%20Workshop) will get you up to speed with the fundamentals of SQL. You'll learn how to use SQL queries and functions to create and manage relational databases, and apply your new skills to creatively solve real-world problems.	
